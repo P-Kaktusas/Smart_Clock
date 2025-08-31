@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>House data</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background: url('https://wallpapercave.com/wp/wp7786752.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    h1 { background: rgba(0, 0, 0, 0.4); color: rgba(255, 255, 255, 0.9); padding: 20px; margin: 0; }
+    .container { display: flex; flex-wrap: wrap; justify-content: center; margin: 20px; }
+    .card { background: rgba(0, 0, 0, 0.4); border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            margin: 15px; padding: 20px; width: 300px; }
+    .value { font-size: 2em; color: rgba(255, 255, 255, 0.9); margin: 10px 0; }
+    .label { font-size: 1em; color: rgba(255, 255, 255, 0.9); }
+  </style>
+</head>
+<body>
+  <h1>House data</h1>
+  <div class="container">
+    <div class="card"><div id="s1" class="value">--</div><div class="label">Temperature</div></div>
+    <div class="card"><div id="s2" class="value">--</div><div class="label">Humidity</div></div>
+    <div class="card"><div id="s3" class="value">--</div><div class="label">Pressure</div></div>
+  </div>
+  <script>
+    const AUTH_TOKEN = "YOUR_AUTH_TOKEN";  // <-- replace with your real token
+
+    function fetchData() {
+      Promise.all([
+        fetch(`https://blynk.cloud/external/api/get?token=${"8hJFVFndKkhDmQJuuADjA4eu5HZ5CXYs"}&V0`).then(r => r.text()),
+        fetch(`https://blynk.cloud/external/api/get?token=${"8hJFVFndKkhDmQJuuADjA4eu5HZ5CXYs"}&V1`).then(r => r.text()),
+        fetch(`https://blynk.cloud/external/api/get?token=${"8hJFVFndKkhDmQJuuADjA4eu5HZ5CXYs"}&V2`).then(r => r.text())
+      ])
+      .then(([temp, hum, pres]) => {
+        document.getElementById('s1').innerText = temp + ' °C';
+        document.getElementById('s2').innerText = hum + ' %';
+        document.getElementById('s3').innerText = pres + ' hPa';
+      })
+      .catch(err => console.error("Error fetching data:", err));
+    }
+
+    setInterval(fetchData, 2000); // refresh every 2 seconds
+    fetchData(); // load once immediately
+  </script>
+</body>
+</html>
