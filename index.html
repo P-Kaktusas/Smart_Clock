@@ -29,27 +29,25 @@
     <div class="card"><div id="s3" class="value">--</div><div class="label">Pressure</div></div>
   </div>
   <script>
-    const AUTH_TOKEN = "YOUR_AUTH_TOKEN";  // <-- replace with your real token
+    const AUTH_TOKEN = "8hJFVFndKkhDmQJuuADjA4eu5HZ5CXYs";  // <-- replace with your real token
 
     function fetchData() {
-      Promise.all([
-        fetch(`https://blynk.cloud/external/api/get?token=${"8hJFVFndKkhDmQJuuADjA4eu5HZ5CXYs"}&V0`).then(r => r.text()),
-        fetch(`https://blynk.cloud/external/api/get?token=${"8hJFVFndKkhDmQJuuADjA4eu5HZ5CXYs"}&V1`).then(r => r.text()),
-        fetch(`https://blynk.cloud/external/api/get?token=${"8hJFVFndKkhDmQJuuADjA4eu5HZ5CXYs"}&V2`).then(r => r.text())
-      ])
-      .then(([temp, hum, pres]) => {
-        let values = data.split(","); // ["23.4", "45.8", "1012.3"]
+  fetch(`https://blynk.cloud/external/api/get?token=${AUTH_TOKEN}&V1`)
+    .then(response => response.text())
+    .then(data => {
+      let values = data.split(","); // ["23.4", "45.8", "1012.3"]
       document.getElementById('s1').innerText = values[0] + " °C";
       document.getElementById('s2').innerText = values[1] + " %";
       document.getElementById('s3').innerText = values[2] + " hPa";
-      })
-      .catch(err => console.error("Error fetching data:", err));
-    }
+    })
+    .catch(err => console.error("Error fetching data:", err));
+}
 
     setInterval(fetchData, 120000); // refresh every 2 seconds
     fetchData(); // load once immediately
   </script>
 </body>
 </html>
+
 
 
