@@ -32,7 +32,7 @@
     const AUTH_TOKEN = "8hJFVFndKkhDmQJuuADjA4eu5HZ5CXYs";  // <-- replace with your real token
 
     function fetchData() {
-  fetch(`https://blynk.cloud/external/api/get?token=${AUTH_TOKEN}&V1`)
+  fetch(`https://blynk.cloud/external/api/get?token=${AUTH_TOKEN}&V0`)
     .then(response => response.text())
     .then(data => {
       let values = data.split(","); // ["23.4", "45.8", "1012.3"]
@@ -48,6 +48,7 @@
   </script>
 </body>
 </html>
+
 
 
 
