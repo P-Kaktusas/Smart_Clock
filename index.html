@@ -15,10 +15,11 @@
     }
     h1 { background: rgba(0, 0, 0, 0.4); color: rgba(255, 255, 255, 0.9); padding: 20px; margin: 0; }
     .container { display: flex; flex-wrap: wrap; justify-content: center; margin: 20px; }
+    /*.container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; justify-items: center; margin: 20px;}*/
     .card { background: rgba(0, 0, 0, 0.4); border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-            margin: 15px; padding: 20px; width: 300px; }
-    .value { font-size: 2em; color: rgba(255, 255, 255, 0.9); margin: 10px 0; }
-    .label { font-size: 1em; color: rgba(255, 255, 255, 0.9); }
+            margin: 20px; padding: 20px; width: 450px; }
+    .value { font-size: 36px; color: rgba(255, 255, 255, 0.9); margin: 10px 0; }
+    .label { font-size: 18px; color: rgba(255, 255, 255, 0.9); }
   </style>
 </head>
 <body>
@@ -27,6 +28,8 @@
     <div class="card"><div id="s1" class="value">--</div><div class="label">Temperature</div></div>
     <div class="card"><div id="s2" class="value">--</div><div class="label">Humidity</div></div>
     <div class="card"><div id="s3" class="value">--</div><div class="label">Pressure</div></div>
+    <div class="card"><div id="status" class="value">--</div><div class="label">Status</div>
+</div>
   </div>
   <script>
     const AUTH_TOKEN = "8hJFVFndKkhDmQJuuADjA4eu5HZ5CXYs";  // <-- replace with your real token
@@ -41,10 +44,29 @@
       document.getElementById('s3').innerText = values[2] + " hPa";
     })
     .catch(err => console.error("Error fetching data:", err));
+    }
+
+    function fetchStatus() {
+  fetch(`https://blynk.cloud/external/api/isHardwareConnected?token=${AUTH_TOKEN}`)
+    .then(response => response.text())
+    .then(status => {
+      let statusElement = document.getElementById('status');
+      if (status === "true") {
+        statusElement.innerText = "Online 🟢";
+        //statusElement.style.color = "lightgreen";
+      } else {
+        statusElement.innerText = "Offline 🔴";
+        //statusElement.style.color = "red";
+      }
+    })
+    .catch(err => console.error("Error fetching status:", err));
 }
 
-    setInterval(fetchData, 120000); // refresh every 2 seconds
+    setInterval(fetchData, 120000); // refresh every 2 minutes
     fetchData(); // load once immediately
+    setInterval(fetchStatus, 120000); // refresh every 2 minutes
+    fetchStatus(); // check once immediately
+
   </script>
 </body>
 </html>
