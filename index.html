@@ -60,11 +60,11 @@
     .catch(err => console.error("Error fetching status:", err));
     }
 
-    fetchData(); // load once immediately
-    fetchStatus(); // check once immediately
+    fetchData();                        // load once immediately
+    fetchStatus();                      // check once immediately
     
-    setInterval(fetchData, 120000); // refresh every 2 minutes
-    setInterval(fetchStatus, 120000); // refresh every 2 minutes
+    setInterval(fetchData, 120000);     // refresh every 2 minutes
+    setInterval(fetchStatus, 120000);   // refresh every 2 minutes
     
 
   </script>
