@@ -38,7 +38,7 @@
   fetch(`https://blynk.cloud/external/api/get?token=${AUTH_TOKEN}&V0`)
     .then(response => response.text())
     .then(data => {
-      let values = data.split(","); // ["23.4", "45.8", "1012.3"]
+      let values = data.split(",");
       document.getElementById('s1').innerText = values[0] + " °C";
       document.getElementById('s2').innerText = values[1] + " %";
       document.getElementById('s3').innerText = values[2] + " hPa";
@@ -53,10 +53,8 @@
       let statusElement = document.getElementById('status');
       if (status === "true") {
         statusElement.innerText = "Online 🟢";
-        //statusElement.style.color = "lightgreen";
       } else {
         statusElement.innerText = "Offline 🔴";
-        //statusElement.style.color = "red";
       }
     })
     .catch(err => console.error("Error fetching status:", err));
